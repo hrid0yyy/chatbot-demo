@@ -19,7 +19,7 @@ if submit_button and user_input:
     st.session_state.messages.append({"role": "user", "content": user_input})
     try:
         # Send request to FastAPI backend
-        response = requests.post("http://localhost:8000/chat", json={"user_input": user_input})
+        response = requests.post("https://contextual-chatbot-fastapi.onrender.com/chat", json={"user_input": user_input})
         response.raise_for_status()
         bot_response = response.json()["response"]
         st.session_state.messages.append({"role": "bot", "content": bot_response})
@@ -37,7 +37,7 @@ for msg in st.session_state.messages:
 if st.button("Clear Conversation"):
     st.session_state.messages = []
     try:
-        requests.post("http://localhost:8000/clear-memory")
+        requests.post("https://contextual-chatbot-fastapi.onrender.com/clear-memory")
         st.success("Conversation history cleared!")
     except requests.RequestException as e:
         st.error(f"Error clearing memory: {e}")
